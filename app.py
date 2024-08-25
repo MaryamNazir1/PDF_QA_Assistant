@@ -47,6 +47,7 @@ def main():
         chunks = text_splitter.split_text(text)
 
         # Create embeddings
+        #embeddings = OpenAIEmbeddings()
         embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl")
         knowledge_base = FAISS.from_texts(chunks, embeddings)
 
@@ -55,7 +56,7 @@ def main():
         if user_question:
             docs = knowledge_base.similarity_search(user_question, k=3)
             # st.write(docs)
-
+            #llm = OpenAI()
             llm = HuggingFaceHub(
                 repo_id="google/flan-t5-small",
                 model_kwargs={"temperature":0.5, "max_length":512},
